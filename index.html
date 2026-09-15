@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preescolar - Anglo Español</title>
+    <!-- Fuente amigable y divertida desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f8ff;
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffe66d;
+            --text-color: #2d3436;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#dfe6e9 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ff5252;
+            text-shadow: 2px 2px 0px #ffe082;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #576574;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: auto;
+        }
+
+        .group-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid transparent;
+        }
+
+        /* Colores divertidos por tarjeta de grupo */
+        .group-card:nth-child(1) { border-color: #ff9f43; }
+        .group-card:nth-child(2) { border-color: #ee5253; }
+        .group-card:nth-child(3) { border-color: #0abde3; }
+        .group-card:nth-child(4) { border-color: #10ac84; }
+        .group-card:nth-child(5) { border-color: #5f27cd; }
+
+        .group-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .group-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .group-card p {
+            font-size: 0.95rem;
+            color: #8395a7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #8395a7;
+            margin-top: 20px;
+        }
+
+        /* Responsive para pantallas pequeñas */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 Bienvenidos a Preescolar Anglo Español🌟</h1>
+        <p>Selecciona tu grupo para ver las actividades y avisos:</p>
+    </header>
+
+    <div class="container">
+        <!-- Grupo K1AV2 -->
+        <a href="K1AV2.html" class="group-card">
+            <span class="icon">🎨</span>
+            <h2>K1A</h2>
+            <p>¡Explora y aprende!</p>
+        </a>
+
+        <!-- Grupo K2AV2 -->
+        <a href="K2AV2.html" class="group-card">
+            <span class="icon">🧸</span>
+            <h2>K2A</h2>
+            <p>¡Explora y aprende!</p>
+        </a>
+
+        <!-- Grupo K2BV2 -->
+        <a href="K2BV2.html" class="group-card">
+            <span class="icon">🚀</span>
+            <h2>K2B</h2>
+            <p>¡Explora y aprende!</p>
+        </a>
+
+        <!-- Grupo K3AV2 -->
+        <a href="K3AV2.html" class="group-card">
+            <span class="icon">🖍️</span>
+            <h2>K3A</h2>
+            <p>¡Explora y aprende!</p>
+        </a>
+
+        <!-- Grupo K3BV2 -->
+        <a href="K3BV2.html" class="group-card">
+            <span class="icon">⭐</span>
+            <h2>K3B</h2>
+            <p>¡Explora y aprende!</p>
+        </a>
+		
+		<!-- Dirección -->
+        <a href="direccion.html" class="group-card">
+            <span class="icon">🏫</span>
+            <h2>Dirección</h2>
+            <p>Avisos y administración</p>
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Preescolar • Todos los derechos reservados</p>
+    </footer>
+
+</body>
+</html>

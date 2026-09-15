@@ -1,0 +1,237 @@
+<!--Grupo 2A-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grupo K2B - Salidas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            text-align: center;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        .subtitulo {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        #ultimo {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 20px 0 30px;
+            padding: 30px 20px;
+            background: linear-gradient(145deg, #ffffff, #f5f7fa);
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-left: 12px solid #d13030;
+            line-height: 1.3;
+        }
+        #ultimo small {
+            font-size: 1.8rem;
+            color: #555;
+            display: block;
+            font-weight: normal;
+        }
+        #lista {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            margin-top: 0;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+        }
+        th {
+            background: #d13030;
+            color: white;
+            padding: 15px 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .hora-col {
+            width: 30%;
+        }
+        .nombre-col {
+            width: 70%;
+        }
+        #audioActivador {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #f39c12;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 60px;
+            box-shadow: 0 8px 20px rgba(243,156,18,0.4);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            z-index: 1000;
+            border: none;
+            transition: transform 0.2s;
+        }
+        #audioActivador:hover {
+            transform: scale(1.05);
+            background: #e67e22;
+        }
+        .cargando {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .grupo-badge {
+            background-color: #2ecc71;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏫 Grupo K2B</h1>
+    <div class="subtitulo">Salida de alumnos</div>
+    
+    <div id="ultimo">
+        Esperando salida...
+        <small></small>
+    </div>
+    
+    <div id="lista">
+        <h2>📋 Últimas 10 salidas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="hora-col">Hora</th>
+                    <th class="nombre-col">Nombre del Alumno</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-lista">
+                <tr><td colspan="2" class="cargando">Cargando datos...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Audio desde Dropbox (cambia por tu enlace real) -->
+    <audio id="alerta" preload="auto">
+        <source src="https://www.dropbox.com/scl/fi/6w52ij7vpwck5lydx5fkj/alerta4.mp3?rlkey=0x31k947oc87zbi58h7dq2dh5&st=bzzo9m59&raw=1" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Botón flotante para habilitar audio -->
+    <div id="audioActivador">🔈 Habilitar alertas sonoras</div>
+
+    <script>
+        // ---------- CONFIGURACIÓN ----------
+        const grupo = "K2B";  // CAMBIA al grupo correspondiente: "1A", "1B", "2A", etc.
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbyxFu756QssmDL5wptbqTL_4hEscNNjCPYPZWLXiBzsJtJT7ykhW900euJ8eQoH_Km0KQ/exec";  // <--- REEMPLAZA con tu URL real (termina en /exec)
+        // ------------------------------------
+
+        let audioHabilitado = false;
+        const alertaSound = document.getElementById('alerta');
+        let ultimoNombreMostrado = "";  // Para detectar nuevos registros
+
+        function reproducirAlerta() {
+            if (!audioHabilitado) return;
+            alertaSound.currentTime = 0;
+            alertaSound.play().catch(e => console.log('Error al reproducir:', e));
+        }
+
+        document.getElementById('audioActivador').addEventListener('click', function() {
+            alertaSound.play().then(() => {
+                audioHabilitado = true;
+                this.style.display = 'none';
+                console.log('Audio habilitado');
+            }).catch(e => {
+                alert('Haz clic en la página para habilitar el sonido');
+            });
+        });
+
+        function actualizar() {
+            if (window.scriptTag) {
+                document.head.removeChild(window.scriptTag);
+            }
+            window.scriptTag = document.createElement('script');
+            window.scriptTag.src = webAppUrl + "?grupo=" + encodeURIComponent(grupo) + "&callback=procesarDatos";
+            document.head.appendChild(window.scriptTag);
+        }
+
+        window.procesarDatos = function(data) {
+            console.log('Datos recibidos:', data);
+
+            if (data.error) {
+                document.getElementById('ultimo').innerHTML = `<span style="color:#e74c3c;">Error: ${data.error}</span>`;
+                return;
+            }
+
+            const ultimoDiv = document.getElementById('ultimo');
+            if (data.ultimo) {
+                const ultimo = data.ultimo;
+                ultimoDiv.innerHTML = `
+                    ${ultimo.nombre}
+                    <small>${ultimo.grupoCompleto}</small>
+                `;
+
+                if (ultimo.nombre !== ultimoNombreMostrado) {
+                    reproducirAlerta();
+                    ultimoNombreMostrado = ultimo.nombre;
+                }
+            } else {
+                ultimoDiv.innerHTML = 'Sin registros aún <small></small>';
+            }
+
+            const tbody = document.getElementById('tabla-lista');
+            tbody.innerHTML = '';
+
+            if (data.lista && data.lista.length > 0) {
+                data.lista.forEach(reg => {
+                    const fecha = new Date(reg.timestamp);
+                    const hora = fecha.toLocaleTimeString();
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${hora}</td>
+                        <td>${reg.nombre}</td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding:30px;">No hay salidas registradas</td></tr>';
+            }
+        };
+
+        setInterval(actualizar, 1000);  // Actualizar cada 1 segundo
+        actualizar();
+    </script>
+</body>
+</html>
